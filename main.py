@@ -1,4 +1,4 @@
-# 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
+# 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
 import sys
 import numpy
 import pygame
@@ -11,20 +11,25 @@ pygame.display.set_caption("TIC TAC TOE")
 screen.fill(bgColor)
 
 
-class board:
+class BOARD:
 
     def __init__(self):
-        self.place = numpy.zeros((3, 3))
+        self.place = numpy.zeros((rows, cols))
         print(self.place)
 
+    def mark_place(self, row, col, player):
+        self.place[row][col] = player
 
-class game:
+
+class GAME:
 
     def __init__(self):
-        self.board = board()
+        self.board = BOARD()
         self.show_lines()
+        self.player = 1
 
-    def show_lines(self):
+    @staticmethod
+    def show_lines():
         # vetical lines
         pygame.draw.line(screen, lineColor, (sqSize, 0), (sqSize, height), lineWidth)
         pygame.draw.line(screen, lineColor, (width - sqSize, 0), (width - sqSize, height), lineWidth)
@@ -34,14 +39,19 @@ class game:
 
 
 def main():
-    g = game()
+    g = GAME()
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = event.pos
+                row = pos[1] // sqSize
+                col = pos[0] // sqSize
+                GAME.board.mark_place(row, col, 1)
+                
         pygame.display.update()
 
 
