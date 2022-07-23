@@ -1,10 +1,10 @@
-WIDTH = 600
-HEIGHT = 600
-ROWS = 3
-COLS = 3
+width = 600
+height = 600
+rows = 3
+cols = 3
 
-SQSIZE = WIDTH // COLS # which is == 200
-LINE_WIDTH = 15
+sqSize = width // cols # which is == 200
+lineWidth = 15
 # Colour
-BG_COLOUR = (150, 170, 150)
-LINE_COLOUR = (0, 0, 0)
+bgColor = (150, 170, 150)
+lineColor = (190, 200, 190)
