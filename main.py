@@ -1,7 +1,9 @@
 # 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
 import sys
+
 import numpy
 import pygame
+
 from constants import *
 
 # pygame setup
@@ -20,16 +22,18 @@ class BOARD:
     def mark_place(self, row, col, player):
         self.place[row][col] = player
 
+    def IsPlaceFree(self, row, col):
+        return self.place[row][col] == 0
 
-class GAME:
+
+class Game:
 
     def __init__(self):
         self.board = BOARD()
         self.show_lines()
         self.player = 1
 
-    @staticmethod
-    def show_lines():
+    def show_lines(self):
         # vetical lines
         pygame.draw.line(screen, lineColor, (sqSize, 0), (sqSize, height), lineWidth)
         pygame.draw.line(screen, lineColor, (width - sqSize, 0), (width - sqSize, height), lineWidth)
@@ -37,22 +41,29 @@ class GAME:
         pygame.draw.line(screen, lineColor, (0, sqSize), (width, sqSize), lineWidth)
         pygame.draw.line(screen, lineColor, (0, height - sqSize), (width, height - sqSize), lineWidth)
 
+    def NextPlayer(self):
+        self.player = self.player % 2 +1
 
-def main():
-    g = GAME()
+class main:
 
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pos = event.pos
-                row = pos[1] // sqSize
-                col = pos[0] // sqSize
-                GAME.board.mark_place(row, col, 1)
-                
-        pygame.display.update()
+    def loop(self):
+        game = Game()
+
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = event.pos
+                    row = pos[1] // sqSize
+                    col = pos[0] // sqSize
+                    if game.board.IsPlaceFree(row, col):
+                        game.board.mark_place(row, col, game.player)
+                        game.NextPlayer()
+                        print(game.board.place)
+            pygame.display.update()
 
 
-main()
+l = main()
+l.loop()
